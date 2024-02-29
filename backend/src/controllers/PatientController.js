@@ -5,16 +5,106 @@ import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
 } from "../data-access/httpStatusCodes.js";
+import { PatientService } from "../services/index.js";
 
-export const getAllPatientsCtrl = (req, res) => {};
+export const getAllPatientsCtrl = async (req, res) => {
+  try {
+    const allPatients = await PatientService.getAllPatients();
 
-export const postCreatePatientCtrl = (req, res) => {};
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Patients: allPatients,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not retrive Patients",
+    });
+  }
+};
 
-export const getOnePatientCtrl = (req, res) => {};
+export const postCreatePatientCtrl = async (req, res) => {
+  try {
+    const newPatient = await PatientService.postAddPatient(req.body);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Patient: newPatient,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Patient",
+    });
+  }
+};
 
-export const patchPatientCtrl = (req, res) => {};
+export const getOnePatientCtrl = async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    const newPatient = await PatientService.getOnePatient(patientId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Patient: newPatient,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Patient",
+    });
+  }
+};
 
-export const deletePatientCtrl = (req, res) => {};
+export const patchPatientCtrl = async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    const newPatient = await PatientService.getOnePatient(patientId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Patient: newPatient,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Patient",
+    });
+  }
+};
+
+export const deletePatientCtrl = async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    const newPatient = await PatientService.getOnePatient(patientId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Patient: newPatient,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Patient",
+    });
+  }
+};
 
 const PatientController = {
   getAllPatientsCtrl,

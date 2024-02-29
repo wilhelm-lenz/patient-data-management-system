@@ -5,16 +5,106 @@ import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
 } from "../data-access/httpStatusCodes.js";
+import { TreatmentService } from "../services/index.js";
 
-export const getAllTreatmentsCtrl = (req, res) => {};
+export const getAllTreatmentsCtrl = async (req, res) => {
+  try {
+    const allTreatments = await TreatmentService.getAllTreatments();
 
-export const postCreateTreatmentCtrl = (req, res) => {};
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Treatments: allTreatments,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not retrive Treatments",
+    });
+  }
+};
 
-export const getOneTreatmentCtrl = (req, res) => {};
+export const postCreateTreatmentCtrl = async (req, res) => {
+  try {
+    const newTreatment = await TreatmentService.postAddTreatment(req.body);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Treatment: newTreatment,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Treatment",
+    });
+  }
+};
 
-export const patchTreatmentCtrl = (req, res) => {};
+export const getOneTreatmentCtrl = async (req, res) => {
+  try {
+    const treatmentId = req.params.id;
+    const newTreatment = await TreatmentService.getOneTreatment(treatmentId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Treatment: newTreatment,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Treatment",
+    });
+  }
+};
 
-export const deleteTreatmentCtrl = (req, res) => {};
+export const patchTreatmentCtrl = async (req, res) => {
+  try {
+    const treatmentId = req.params.id;
+    const newTreatment = await TreatmentService.getOneTreatment(treatmentId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Treatment: newTreatment,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Treatment",
+    });
+  }
+};
+
+export const deleteTreatmentCtrl = async (req, res) => {
+  try {
+    const treatmentId = req.params.id;
+    const newTreatment = await TreatmentService.getOneTreatment(treatmentId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Treatment: newTreatment,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Treatment",
+    });
+  }
+};
 
 const TreatmentController = {
   getAllTreatmentsCtrl,

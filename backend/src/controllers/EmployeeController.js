@@ -5,16 +5,106 @@ import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
 } from "../data-access/httpStatusCodes.js";
+import { EmployeeService } from "../services/index.js";
 
-export const getAllEmployeesCtrl = (req, res) => {};
+export const getAllEmployeesCtrl = async (req, res) => {
+  try {
+    const allEmployees = await EmployeeService.getAllEmployees();
 
-export const postCreateEmployeeCtrl = (req, res) => {};
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Employees: allEmployees,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not retrive Employees",
+    });
+  }
+};
 
-export const getOneEmployeeCtrl = (req, res) => {};
+export const postCreateEmployeeCtrl = async (req, res) => {
+  try {
+    const newEmployee = await EmployeeService.postAddEmployee(req.body);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Employee: newEmployee,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Employee",
+    });
+  }
+};
 
-export const patchEmployeeCtrl = (req, res) => {};
+export const getOneEmployeeCtrl = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    const newEmployee = await EmployeeService.getOneEmployee(employeeId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Employee: newEmployee,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Employee",
+    });
+  }
+};
 
-export const deleteEmployeeCtrl = (req, res) => {};
+export const patchEmployeeCtrl = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    const newEmployee = await EmployeeService.getOneEmployee(employeeId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Employee: newEmployee,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Employee",
+    });
+  }
+};
+
+export const deleteEmployeeCtrl = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    const newEmployee = await EmployeeService.getOneEmployee(employeeId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Employee: newEmployee,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Employee",
+    });
+  }
+};
 
 const EmployeeController = {
   getAllEmployeesCtrl,

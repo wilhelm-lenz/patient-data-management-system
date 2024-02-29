@@ -7,7 +7,7 @@ const prescriptionSchema = new mongoose.Schema(
     dosage: { type: String },
     instructions: { type: String },
   },
-  { collation: "prescriptions", timestamps: true }
+  { collection: "prescriptions", timestamps: true }
 );
 
 const Prescription = mongoose.model("Prescription", prescriptionSchema);

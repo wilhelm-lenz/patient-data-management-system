@@ -5,16 +5,106 @@ import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
 } from "../data-access/httpStatusCodes.js";
+import { UserService } from "../services/index.js";
 
-export const getAllUsersCtrl = (req, res) => {};
+export const getAllUsersCtrl = async (req, res) => {
+  try {
+    const allUsers = await UserService.getAllUsers();
 
-export const postCreateUserCtrl = (req, res) => {};
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Users: allUsers,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not retrive Users",
+    });
+  }
+};
 
-export const getOneUserCtrl = (req, res) => {};
+export const postCreateUserCtrl = async (req, res) => {
+  try {
+    const newUser = await UserService.postAddUser(req.body);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        User: newUser,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create User",
+    });
+  }
+};
 
-export const patchUserCtrl = (req, res) => {};
+export const getOneUserCtrl = async (req, res) => {
+  try {
+    const UserId = req.params.id;
+    const newUser = await UserService.getOneUser(UserId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        User: newUser,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create User",
+    });
+  }
+};
 
-export const deleteUserCtrl = (req, res) => {};
+export const patchUserCtrl = async (req, res) => {
+  try {
+    const UserId = req.params.id;
+    const newUser = await UserService.getOneUser(UserId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        User: newUser,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create User",
+    });
+  }
+};
+
+export const deleteUserCtrl = async (req, res) => {
+  try {
+    const UserId = req.params.id;
+    const newUser = await UserService.getOneUser(UserId);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        User: newUser,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create User",
+    });
+  }
+};
 
 const UserController = {
   getAllUsersCtrl,

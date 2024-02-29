@@ -5,16 +5,112 @@ import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
 } from "../data-access/httpStatusCodes.js";
+import { MedicationService } from "../services/index.js";
 
-export const getAllMedicationsCtrl = (req, res) => {};
+export const getAllMedicationsCtrl = async (req, res) => {
+  try {
+    const allMedications = await MedicationService.getAllMedications();
 
-export const postCreateMedicationCtrl = (req, res) => {};
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Medications: allMedications,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not retrive Medications",
+    });
+  }
+};
 
-export const getOneMedicationCtrl = (req, res) => {};
+export const postCreateMedicationCtrl = async (req, res) => {
+  try {
+    const newMedication = await MedicationService.postAddMedication(req.body);
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Medication: newMedication,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Medication",
+    });
+  }
+};
 
-export const patchMedicationCtrl = (req, res) => {};
+export const getOneMedicationCtrl = async (req, res) => {
+  try {
+    const medicationId = req.params.id;
+    const newMedication = await MedicationService.getOneMedication(
+      medicationId
+    );
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Medication: newMedication,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Medication",
+    });
+  }
+};
 
-export const deleteMedicationCtrl = (req, res) => {};
+export const patchMedicationCtrl = async (req, res) => {
+  try {
+    const medicationId = req.params.id;
+    const newMedication = await MedicationService.getOneMedication(
+      medicationId
+    );
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Medication: newMedication,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Medication",
+    });
+  }
+};
+
+export const deleteMedicationCtrl = async (req, res) => {
+  try {
+    const medicationId = req.params.id;
+    const newMedication = await MedicationService.getOneMedication(
+      medicationId
+    );
+    res.status(OK).json({
+      status: "success",
+      data: {
+        Medication: newMedication,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({
+      status: "fail",
+      error,
+      message: error.message || "Could not create Medication",
+    });
+  }
+};
 
 const MedicationController = {
   getAllMedicationsCtrl,
