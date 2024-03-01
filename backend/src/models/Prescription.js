@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const prescriptionSchema = new mongoose.Schema(
   {
-    treatmentId: { type: String },
-    medicationId: { type: String },
+    treatmentId: { type: mongoose.Types.ObjectId },
+    medicationId: { type: mongoose.Types.ObjectId },
     dosage: { type: String },
     instructions: { type: String },
   },

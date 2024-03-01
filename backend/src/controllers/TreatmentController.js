@@ -69,7 +69,10 @@ export const getOneTreatmentCtrl = async (req, res) => {
 export const patchTreatmentCtrl = async (req, res) => {
   try {
     const treatmentId = req.params.id;
-    const newTreatment = await TreatmentService.getOneTreatment(treatmentId);
+    const newTreatment = await TreatmentService.patchTreatment(
+      treatmentId,
+      req.body
+    );
     res.status(OK).json({
       status: "success",
       data: {
@@ -89,7 +92,7 @@ export const patchTreatmentCtrl = async (req, res) => {
 export const deleteTreatmentCtrl = async (req, res) => {
   try {
     const treatmentId = req.params.id;
-    const newTreatment = await TreatmentService.getOneTreatment(treatmentId);
+    const newTreatment = await TreatmentService.deleteTreatment(treatmentId);
     res.status(OK).json({
       status: "success",
       data: {

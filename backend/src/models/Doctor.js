@@ -2,11 +2,24 @@ import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema(
   {
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
-    specialization: { type: String },
-    contactInformation: { type: String },
-    workingHours: { type: String },
+    title: { type: String, enum: ["Dr", "Prof"] },
+    firstname: {
+      type: String,
+      require: [true || "A doctor must have a firstname"],
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      require: [true || "An doctor must have a lastname"],
+      trim: true,
+    },
+    gender: { type: String, enum: ["male", "female", "non-binary"] },
+    specialization: {
+      type: String,
+      require: [true || "An doctor must have a specialization"],
+    },
+    contactInformation: { type: Object },
+    workingHours: { type: Object },
   },
   { collection: "doctors", timestamps: true }
 );

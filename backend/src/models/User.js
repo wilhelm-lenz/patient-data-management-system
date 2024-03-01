@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, "A user must have a firstname"],
+      required: [true, "A user must have a username"],
       trim: true,
     },
     email: {
@@ -25,15 +25,15 @@ const userSchema = new mongoose.Schema(
     bio: { type: String },
     role: { type: String, enum: ["doctor", "employee", "admin", "patient"] },
     associatedId: { type: mongoose.Types.ObjectId },
-    contactInformation: { type: String }, // optional
+    contactInformation: { type: Object }, // optional
     status: { type: String, enum: ["active", "inactive", "locked"] },
     twoFactorAuthenticationEnabled: { type: Boolean },
     languageSetings: { type: String, enum: ["EN", "DE"] },
     accessLog: { type: [{}] },
     passwordChangeDate: { type: Date },
     securatyQuestions: { type: [{}] },
-    createdAt: { type: Date },
-    updatedAt: { type: Date },
+    // createdAt: { type: Date },
+    // updatedAt: { type: Date },
   },
   { collection: "users", timestamps: true }
 );

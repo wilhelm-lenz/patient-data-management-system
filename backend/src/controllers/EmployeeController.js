@@ -69,7 +69,10 @@ export const getOneEmployeeCtrl = async (req, res) => {
 export const patchEmployeeCtrl = async (req, res) => {
   try {
     const employeeId = req.params.id;
-    const newEmployee = await EmployeeService.getOneEmployee(employeeId);
+    const newEmployee = await EmployeeService.patchEmployee(
+      employeeId,
+      req.body
+    );
     res.status(OK).json({
       status: "success",
       data: {
@@ -89,7 +92,7 @@ export const patchEmployeeCtrl = async (req, res) => {
 export const deleteEmployeeCtrl = async (req, res) => {
   try {
     const employeeId = req.params.id;
-    const newEmployee = await EmployeeService.getOneEmployee(employeeId);
+    const newEmployee = await EmployeeService.deleteEmployee(employeeId);
     res.status(OK).json({
       status: "success",
       data: {

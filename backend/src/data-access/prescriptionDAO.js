@@ -10,7 +10,6 @@ const findOne = async (prescriptionId) => {
   const foundedOnePrescription = await Prescription.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(prescriptionId),
   });
-  console.log(foundedOnePrescription);
   return foundedOnePrescription;
 };
 

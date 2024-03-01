@@ -1,26 +1,28 @@
 import { AppointmentDAO } from "../../data-access/index.js";
-import { createAppointmentPayload } from "../../helpers/createAppointmentPayload.js";
+import { prepareAppointmentObject } from "../../helpers/prepareAppointmentObject.js";
 
 export const patchAppointment = async (
   appointmentId,
   updateAppointmentInfo
 ) => {
   const fields = [
-    "_id",
+    "patientId",
+    "doctorId",
     "appointmentDate",
     "appointmentTime",
     "reasonForAppointment",
     "status",
   ];
 
-  const appointmentForUpdateData = createAppointmentPayload(
+  const appointmentForUpdateData = await prepareAppointmentObject(
     updateAppointmentInfo,
     fields
   );
 
-  const allAppointments = await AppointmentDAO.updateOneOrMany(
+  const updateAppointment = await AppointmentDAO.updateOneOrMany(
     appointmentId,
     appointmentForUpdateData
   );
-  return allAppointments;
+
+  return updateAppointment;
 };

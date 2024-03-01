@@ -73,8 +73,9 @@ export const getOnePrescriptionCtrl = async (req, res) => {
 export const patchPrescriptionCtrl = async (req, res) => {
   try {
     const prescriptionId = req.params.id;
-    const newPrescription = await PrescriptionService.getOnePrescription(
-      prescriptionId
+    const newPrescription = await PrescriptionService.patchPrescription(
+      prescriptionId,
+      req.body
     );
     res.status(OK).json({
       status: "success",
@@ -95,7 +96,7 @@ export const patchPrescriptionCtrl = async (req, res) => {
 export const deletePrescriptionCtrl = async (req, res) => {
   try {
     const prescriptionId = req.params.id;
-    const newPrescription = await PrescriptionService.getOnePrescription(
+    const newPrescription = await PrescriptionService.deletePrescription(
       prescriptionId
     );
     res.status(OK).json({

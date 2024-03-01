@@ -73,7 +73,10 @@ export const patchMedicalDocumentCtrl = async (req, res) => {
   try {
     const medicalDocumentId = req.params.id;
     const newMedicalDocument =
-      await MedicalDocumentService.getOneMedicalDocument(medicalDocumentId);
+      await MedicalDocumentService.patchMedicalDocument(
+        medicalDocumentId,
+        req.body
+      );
     res.status(OK).json({
       status: "success",
       data: {
@@ -94,7 +97,7 @@ export const deleteMedicalDocumentCtrl = async (req, res) => {
   try {
     const medicalDocumentId = req.params.id;
     const newMedicalDocument =
-      await MedicalDocumentService.getOneMedicalDocument(medicalDocumentId);
+      await MedicalDocumentService.deleteMedicalDocument(medicalDocumentId);
     res.status(OK).json({
       status: "success",
       data: {

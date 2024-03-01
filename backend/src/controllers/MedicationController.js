@@ -71,8 +71,9 @@ export const getOneMedicationCtrl = async (req, res) => {
 export const patchMedicationCtrl = async (req, res) => {
   try {
     const medicationId = req.params.id;
-    const newMedication = await MedicationService.getOneMedication(
-      medicationId
+    const newMedication = await MedicationService.patchMedication(
+      medicationId,
+      req.body
     );
     res.status(OK).json({
       status: "success",
@@ -93,7 +94,7 @@ export const patchMedicationCtrl = async (req, res) => {
 export const deleteMedicationCtrl = async (req, res) => {
   try {
     const medicationId = req.params.id;
-    const newMedication = await MedicationService.getOneMedication(
+    const newMedication = await MedicationService.deleteMedication(
       medicationId
     );
     res.status(OK).json({

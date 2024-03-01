@@ -1,10 +1,8 @@
 import { AppointmentDAO } from "../../data-access/index.js";
-
-import { createAppointmentPayload } from "../../helpers/createAppointmentPayload.js";
+import { prepareAppointmentObject } from "../../helpers/prepareAppointmentObject.js";
 
 export const postAddAppointment = async (newAppointmentInfo) => {
   const fields = [
-    "_id",
     "patientId",
     "doctorId",
     "appointmentDate",
@@ -13,8 +11,14 @@ export const postAddAppointment = async (newAppointmentInfo) => {
     "status",
   ];
 
-  const appointment = createAppointmentPayload(newAppointmentInfo, fields);
+  // if (condition) {
+  // }
 
+  const appointment = await prepareAppointmentObject(
+    newAppointmentInfo,
+    fields
+  );
   const newAppointment = await AppointmentDAO.insertOne(appointment);
+
   return newAppointment;
 };

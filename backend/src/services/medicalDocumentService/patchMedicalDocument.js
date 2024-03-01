@@ -1,12 +1,20 @@
 import { MedicalDocumentDAO } from "../../data-access/index.js";
+import { prepareMedicalDocumentObject } from "../../helpers/prepareMedicalDocumentObject.js";
 
 export const patchMedicalDocument = async (
   medicalDocumentId,
-  updateMedicalDocument
+  updateMedicalDocumentInfo
 ) => {
-  const updatedMedicalDocument = await MedicalDocumentDAO.updateOne(
+  const fields = ["patientId", "documentType", "dateOfCreation", "filePath"];
+
+  const medicalDocumentForUpdateData = await prepareMedicalDocumentObject(
+    updateMedicalDocumentInfo,
+    fields
+  );
+
+  const updatedMedicalDocument = await MedicalDocumentDAO.updateOneOrMany(
     medicalDocumentId,
-    updateMedicalDocument
+    medicalDocumentForUpdateData
   );
   return updatedMedicalDocument;
 };

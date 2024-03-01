@@ -69,7 +69,7 @@ export const getOneUserCtrl = async (req, res) => {
 export const patchUserCtrl = async (req, res) => {
   try {
     const UserId = req.params.id;
-    const newUser = await UserService.getOneUser(UserId);
+    const newUser = await UserService.patchUser(UserId, req.body);
     res.status(OK).json({
       status: "success",
       data: {
@@ -89,7 +89,7 @@ export const patchUserCtrl = async (req, res) => {
 export const deleteUserCtrl = async (req, res) => {
   try {
     const UserId = req.params.id;
-    const newUser = await UserService.getOneUser(UserId);
+    const newUser = await UserService.deleteUser(UserId);
     res.status(OK).json({
       status: "success",
       data: {

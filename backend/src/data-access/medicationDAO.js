@@ -7,11 +7,9 @@ export const findAll = async () => {
 };
 
 const findOne = async (medicationId) => {
-  console.log(medicationId);
   const foundedOneMedication = await Medication.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(medicationId),
   });
-  console.log(foundedOneMedication);
   return foundedOneMedication;
 };
 

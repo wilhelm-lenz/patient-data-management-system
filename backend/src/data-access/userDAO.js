@@ -10,7 +10,6 @@ const findOne = async (userId) => {
   const foundedOneUser = await User.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(userId),
   });
-  console.log(foundedOneUser);
   return foundedOneUser;
 };
 

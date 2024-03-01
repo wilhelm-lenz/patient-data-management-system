@@ -7,15 +7,14 @@ export const findAll = async () => {
 };
 
 const findOne = async (doctorId) => {
-  console.log(doctorId);
   const foundedOneDoctor = await Doctor.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(doctorId),
   });
-  console.log(foundedOneDoctor);
   return foundedOneDoctor;
 };
 
 const insertOne = async (newDoctor) => {
+  console.log("=============", newDoctor);
   const insertDoctor = await Doctor.create(newDoctor);
   return insertDoctor;
 };
@@ -27,11 +26,11 @@ const updateOneOrMany = async (doctorId, doctorForUpdateData) => {
     { new: true }
   );
   if (!updatedDoctor) throw new Error("Doctor not found");
-  else if (
-    updatedDoctor.status === "completed" ||
-    updatedDoctor.status === "cancelled"
-  )
-    await Doctor.findByIdAndDelete(doctorId);
+  // else if (
+  //   updatedDoctor.status === "completed" ||
+  //   updatedDoctor.status === "cancelled"
+  // )
+  //   await Doctor.findByIdAndDelete(doctorId);
 
   return updatedDoctor;
 };

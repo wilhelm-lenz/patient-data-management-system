@@ -7,11 +7,9 @@ export const findAll = async () => {
 };
 
 const findOne = async (employeeId) => {
-  console.log(employeeId);
   const foundedOneEmployee = await Employee.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(employeeId),
   });
-  console.log(foundedOneEmployee);
   return foundedOneEmployee;
 };
 

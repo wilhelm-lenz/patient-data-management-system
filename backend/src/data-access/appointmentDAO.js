@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 import Appointment from "../models/Appointment.js";
 
 export const findAll = async () => {
-  const foundedAppointments = Appointment.find();
+  const foundedAppointments = await Appointment.find();
+  if (foundedAppointments.length === 0) throw new Error("No Users Found");
   return foundedAppointments;
 };
 
 const findOne = async (appointmentId) => {
-  console.log(appointmentId);
   const foundedOneAppointment = await Appointment.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(appointmentId),
   });
-  console.log(foundedOneAppointment);
+  if (!foundedOneAppointment) throw new Error("User not found");
   return foundedOneAppointment;
 };
 
@@ -37,7 +37,8 @@ const updateOneOrMany = async (appointmentId, appointmentForUpdateData) => {
 };
 
 const deleteOne = async (appointmentId) => {
-  const deletedAppointment = Appointment.findByIdAndDelete(appointmentId);
+  const deletedAppointment = await Appointment.findByIdAndDelete(appointmentId);
+  if (!deletedAppointment) throw new Error("Appointment for delete not found");
   return deletedAppointment;
 };
 

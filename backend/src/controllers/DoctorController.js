@@ -69,7 +69,7 @@ export const getOneDoctorCtrl = async (req, res) => {
 export const patchDoctorCtrl = async (req, res) => {
   try {
     const doctorId = req.params.id;
-    const newDoctor = await DoctorService.getOneDoctor(doctorId);
+    const newDoctor = await DoctorService.patchDoctor(doctorId, req.body);
     res.status(OK).json({
       status: "success",
       data: {
@@ -89,7 +89,7 @@ export const patchDoctorCtrl = async (req, res) => {
 export const deleteDoctorCtrl = async (req, res) => {
   try {
     const doctorId = req.params.id;
-    const newDoctor = await DoctorService.getOneDoctor(doctorId);
+    const newDoctor = await DoctorService.deleteDoctor(doctorId);
     res.status(OK).json({
       status: "success",
       data: {
