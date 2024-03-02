@@ -14,7 +14,7 @@ export const prepareMedicalDocumentObject = async (
     _id: newMedicalDocument._id,
     patientId: patient._id,
     documentType: newMedicalDocument.documentType,
-    dateOfCreation: newMedicalDocument.dateOfCreation,
+    dateOfCreation: Date.now(),
     filePath: newMedicalDocument.filePath,
   };
 
