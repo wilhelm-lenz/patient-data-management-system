@@ -1,119 +1,67 @@
 import { AppointmentService } from "../services/index.js";
-import {
-  OK,
-  CREATED,
-  NO_CONTENT,
-  BAD_REQUEST,
-  INTERNAL_SERVER_ERROR,
-} from "../data-access/httpStatusCodes.js";
+import { OK, CREATED, NO_CONTENT } from "../data-access/httpStatusCodes.js";
+import { catchAsync } from "../utils/catchAsync.js";
 
-export const getAllAppointmentsCtrl = async (req, res) => {
-  try {
-    const allAppointments = await AppointmentService.getAllAppointments();
+export const getAllAppointmentsCtrl = catchAsync(async (_, res) => {
+  const allAppointments = await AppointmentService.getAllAppointments();
 
-    res.status(OK).json({
-      status: "success",
-      data: {
-        appointments: allAppointments,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not retrive appointments",
-    });
-  }
-};
+  res.status(OK).json({
+    status: "success",
+    data: {
+      appointments: allAppointments,
+    },
+  });
+});
 
-export const postCreateAppointmentCtrl = async (req, res) => {
-  try {
-    const newAppointment = await AppointmentService.postAddAppointment(
-      req.body
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        appointment: newAppointment,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create appointment",
-    });
-  }
-};
+export const postCreateAppointmentCtrl = catchAsync(async (req, res) => {
+  const newAppointment = await AppointmentService.postAddAppointment(req.body);
+  res.status(CREATED).json({
+    status: "success",
+    data: {
+      appointment: newAppointment,
+    },
+  });
+});
 
-export const getOneAppointmentCtrl = async (req, res) => {
-  try {
-    const appointmentId = req.params.id;
-    const newAppointment = await AppointmentService.getOneAppointment(
-      appointmentId
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        appointment: newAppointment,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create appointment",
-    });
-  }
-};
+export const getOneAppointmentCtrl = catchAsync(async (req, res) => {
+  const appointmentId = req.params.id;
+  const newAppointment = await AppointmentService.getOneAppointment(
+    appointmentId
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      appointment: newAppointment,
+    },
+  });
+});
 
-export const patchAppointmentCtrl = async (req, res) => {
-  try {
-    const appointmentId = req.params.id;
-    const updatedAppointment = await AppointmentService.patchAppointment(
-      appointmentId,
-      req.body
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        appointment: updatedAppointment,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create appointment",
-    });
-  }
-};
+export const patchAppointmentCtrl = catchAsync(async (req, res) => {
+  const appointmentId = req.params.id;
+  const updatedAppointment = await AppointmentService.patchAppointment(
+    appointmentId,
+    req.body
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      appointment: updatedAppointment,
+    },
+  });
+});
 
-export const deleteAppointmentCtrl = async (req, res) => {
-  try {
-    const appointmentId = req.params.id;
-    const newAppointment = await AppointmentService.deleteAppointment(
-      appointmentId
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        appointment: newAppointment,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create appointment",
-    });
-  }
-};
+export const deleteAppointmentCtrl = catchAsync(async (req, res) => {
+  const appointmentId = req.params.id;
+  const newAppointment = await AppointmentService.deleteAppointment(
+    appointmentId
+  );
+  res.status(NO_CONTENT).json({
+    status: "success",
+    data: {
+      appointment: newAppointment,
+    },
+  });
+});
 
 const AppointmentController = {
   getAllAppointmentsCtrl,

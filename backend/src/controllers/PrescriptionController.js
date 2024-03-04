@@ -1,119 +1,69 @@
-import {
-  OK,
-  CREATED,
-  NO_CONTENT,
-  BAD_REQUEST,
-  INTERNAL_SERVER_ERROR,
-} from "../data-access/httpStatusCodes.js";
+import { OK, CREATED, NO_CONTENT } from "../data-access/httpStatusCodes.js";
 import { PrescriptionService } from "../services/index.js";
+import { catchAsync } from "../utils/catchAsync.js";
 
-export const getAllPrescriptionsCtrl = async (req, res) => {
-  try {
-    const allPrescriptions = await PrescriptionService.getAllPrescriptions();
+export const getAllPrescriptionsCtrl = catchAsync(async (_, res) => {
+  const allPrescriptions = await PrescriptionService.getAllPrescriptions();
 
-    res.status(OK).json({
-      status: "success",
-      data: {
-        Prescriptions: allPrescriptions,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not retrive Prescriptions",
-    });
-  }
-};
+  res.status(OK).json({
+    status: "success",
+    data: {
+      Prescriptions: allPrescriptions,
+    },
+  });
+});
 
-export const postCreatePrescriptionCtrl = async (req, res) => {
-  try {
-    const newPrescription = await PrescriptionService.postAddPrescription(
-      req.body
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        Prescription: newPrescription,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create Prescription",
-    });
-  }
-};
+export const postCreatePrescriptionCtrl = catchAsync(async (req, res) => {
+  const newPrescription = await PrescriptionService.postAddPrescription(
+    req.body
+  );
+  res.status(CREATED).json({
+    status: "success",
+    data: {
+      Prescription: newPrescription,
+    },
+  });
+});
 
-export const getOnePrescriptionCtrl = async (req, res) => {
-  try {
-    const prescriptionId = req.params.id;
-    const newPrescription = await PrescriptionService.getOnePrescription(
-      prescriptionId
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        Prescription: newPrescription,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create Prescription",
-    });
-  }
-};
+export const getOnePrescriptionCtrl = catchAsync(async (req, res) => {
+  const prescriptionId = req.params.id;
+  const newPrescription = await PrescriptionService.getOnePrescription(
+    prescriptionId
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      Prescription: newPrescription,
+    },
+  });
+});
 
-export const patchPrescriptionCtrl = async (req, res) => {
-  try {
-    const prescriptionId = req.params.id;
-    const newPrescription = await PrescriptionService.patchPrescription(
-      prescriptionId,
-      req.body
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        Prescription: newPrescription,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create Prescription",
-    });
-  }
-};
+export const patchPrescriptionCtrl = catchAsync(async (req, res) => {
+  const prescriptionId = req.params.id;
+  const newPrescription = await PrescriptionService.patchPrescription(
+    prescriptionId,
+    req.body
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      Prescription: newPrescription,
+    },
+  });
+});
 
-export const deletePrescriptionCtrl = async (req, res) => {
-  try {
-    const prescriptionId = req.params.id;
-    const newPrescription = await PrescriptionService.deletePrescription(
-      prescriptionId
-    );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        Prescription: newPrescription,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create Prescription",
-    });
-  }
-};
+export const deletePrescriptionCtrl = catchAsync(async (req, res) => {
+  const prescriptionId = req.params.id;
+  const newPrescription = await PrescriptionService.deletePrescription(
+    prescriptionId
+  );
+  res.status(NO_CONTENT).json({
+    status: "success",
+    data: {
+      Prescription: newPrescription,
+    },
+  });
+});
 
 const PrescriptionController = {
   getAllPrescriptionsCtrl,

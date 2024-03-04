@@ -1,118 +1,69 @@
-import {
-  OK,
-  CREATED,
-  NO_CONTENT,
-  BAD_REQUEST,
-  INTERNAL_SERVER_ERROR,
-} from "../data-access/httpStatusCodes.js";
+import { OK, CREATED, NO_CONTENT } from "../data-access/httpStatusCodes.js";
 import { MedicalDocumentService } from "../services/index.js";
+import { catchAsync } from "../utils/catchAsync.js";
 
-export const getAllMedicalDocumentsCtrl = async (req, res) => {
-  try {
-    const allMedicalDocuments =
-      await MedicalDocumentService.getAllMedicalDocuments();
+export const getAllMedicalDocumentsCtrl = catchAsync(async (_, res) => {
+  const allMedicalDocuments =
+    await MedicalDocumentService.getAllMedicalDocuments();
 
-    res.status(OK).json({
-      status: "success",
-      data: {
-        MedicalDocuments: allMedicalDocuments,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not retrive MedicalDocuments",
-    });
-  }
-};
+  res.status(OK).json({
+    status: "success",
+    data: {
+      MedicalDocuments: allMedicalDocuments,
+    },
+  });
+});
 
-export const postCreateMedicalDocumentCtrl = async (req, res) => {
-  try {
-    const newMedicalDocument =
-      await MedicalDocumentService.postAddMedicalDocument(req.body);
-    res.status(OK).json({
-      status: "success",
-      data: {
-        MedicalDocument: newMedicalDocument,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create MedicalDocument",
-    });
-  }
-};
+export const postCreateMedicalDocumentCtrl = catchAsync(async (req, res) => {
+  const newMedicalDocument =
+    await MedicalDocumentService.postAddMedicalDocument(req.body);
+  res.status(CREATED).json({
+    status: "success",
+    data: {
+      MedicalDocument: newMedicalDocument,
+    },
+  });
+});
 
-export const getOneMedicalDocumentCtrl = async (req, res) => {
-  try {
-    const medicalDocumentId = req.params.id;
-    const newMedicalDocument =
-      await MedicalDocumentService.getOneMedicalDocument(medicalDocumentId);
-    res.status(OK).json({
-      status: "success",
-      data: {
-        MedicalDocument: newMedicalDocument,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create MedicalDocument",
-    });
-  }
-};
+export const getOneMedicalDocumentCtrl = catchAsync(async (req, res) => {
+  const medicalDocumentId = req.params.id;
+  const newMedicalDocument = await MedicalDocumentService.getOneMedicalDocument(
+    medicalDocumentId
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      MedicalDocument: newMedicalDocument,
+    },
+  });
+});
 
-export const patchMedicalDocumentCtrl = async (req, res) => {
-  try {
-    const medicalDocumentId = req.params.id;
-    const newMedicalDocument =
-      await MedicalDocumentService.patchMedicalDocument(
-        medicalDocumentId,
-        req.body
-      );
-    res.status(OK).json({
-      status: "success",
-      data: {
-        MedicalDocument: newMedicalDocument,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create MedicalDocument",
-    });
-  }
-};
+export const patchMedicalDocumentCtrl = catchAsync(async (req, res) => {
+  const medicalDocumentId = req.params.id;
+  const newMedicalDocument = await MedicalDocumentService.patchMedicalDocument(
+    medicalDocumentId,
+    req.body
+  );
+  res.status(OK).json({
+    status: "success",
+    data: {
+      MedicalDocument: newMedicalDocument,
+    },
+  });
+});
 
-export const deleteMedicalDocumentCtrl = async (req, res) => {
-  try {
-    const medicalDocumentId = req.params.id;
-    const newMedicalDocument =
-      await MedicalDocumentService.deleteMedicalDocument(medicalDocumentId);
-    res.status(OK).json({
-      status: "success",
-      data: {
-        MedicalDocument: newMedicalDocument,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({
-      status: "fail",
-      error,
-      message: error.message || "Could not create MedicalDocument",
-    });
-  }
-};
+export const deleteMedicalDocumentCtrl = catchAsync(async (req, res) => {
+  const medicalDocumentId = req.params.id;
+  const newMedicalDocument = await MedicalDocumentService.deleteMedicalDocument(
+    medicalDocumentId
+  );
+  res.status(NO_CONTENT).json({
+    status: "success",
+    data: {
+      MedicalDocument: newMedicalDocument,
+    },
+  });
+});
 
 const MedicalDocumentController = {
   getAllMedicalDocumentsCtrl,

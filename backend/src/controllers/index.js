@@ -2,6 +2,7 @@ import AppointmentController from "./AppointmentController.js";
 // import AuthorizationController from "./AuthorizationController.js";
 import DoctorController from "./DoctorController.js";
 import EmployeeController from "./EmployeeController.js";
+import ErrorController from "./ErrorController.js";
 import MedicalDocumentController from "./MedicalDocumentController.js";
 import MedicationController from "./MedicationController.js";
 import PatientController from "./PatientController.js";
@@ -20,4 +21,5 @@ export {
   PrescriptionController,
   TreatmentController,
   UserController,
+  ErrorController,
 };

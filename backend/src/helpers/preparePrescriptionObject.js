@@ -6,7 +6,6 @@ export const preparePrescriptionObject = async (
   newPrescription,
   fields = []
 ) => {
-  console.log(newPrescription);
   const medication = await Medication.findById(newPrescription.medicationId);
   const treatment = await Treatment.findById(newPrescription.treatmentId);
   if (!medication || !treatment) {
