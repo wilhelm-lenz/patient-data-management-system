@@ -1,14 +1,15 @@
 import { OK, CREATED, NO_CONTENT } from "../data-access/httpStatusCodes.js";
+import User from "../models/User.js";
 import { UserService } from "../services/index.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
-export const getAllUsersCtrl = catchAsync(async (_, res) => {
+export const getAllUsersCtrl = catchAsync(async (_, res, next) => {
   const allUsers = await UserService.getAllUsers();
 
   res.status(OK).json({
     status: "success",
     data: {
-      Users: allUsers,
+      users: allUsers,
     },
   });
 });
@@ -18,7 +19,7 @@ export const postCreateUserCtrl = catchAsync(async (req, res) => {
   res.status(CREATED).json({
     status: "success",
     data: {
-      User: newUser,
+      user: newUser,
     },
   });
 });
@@ -29,7 +30,7 @@ export const getOneUserCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      User: newUser,
+      user: newUser,
     },
   });
 });
@@ -40,7 +41,7 @@ export const patchUserCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      User: newUser,
+      user: newUser,
     },
   });
 });
@@ -51,7 +52,7 @@ export const deleteUserCtrl = catchAsync(async (req, res) => {
   res.status(NO_CONTENT).json({
     status: "success",
     data: {
-      User: newUser,
+      user: newUser,
     },
   });
 });

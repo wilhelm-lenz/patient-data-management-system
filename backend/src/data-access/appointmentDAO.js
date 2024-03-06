@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 import Appointment from "../models/Appointment.js";
+import AppError from "../utils/AppError.js";
+import { BAD_REQUEST, NOT_FOUND } from "./httpStatusCodes.js";
 
 export const findAll = async () => {
   const foundedAppointments = await Appointment.find();
-  if (foundedAppointments.length === 0) throw new Error("No Users Found");
+  // if (foundedAppointments.length === 0)
+  //   throw new Error("No Appointments Found");
   return foundedAppointments;
 };
 
@@ -11,7 +14,10 @@ const findOne = async (appointmentId) => {
   const foundedOneAppointment = await Appointment.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(appointmentId),
   });
-  if (!foundedOneAppointment) throw new Error("User not found");
+
+  // if (!foundedOneAppointment)
+  //   throw new AppError("No Appointment found with that ID", NOT_FOUND);
+
   return foundedOneAppointment;
 };
 
@@ -26,7 +32,8 @@ const updateOneOrMany = async (appointmentId, appointmentForUpdateData) => {
     appointmentForUpdateData,
     { new: true }
   );
-  if (!updatedAppointment) throw new Error("Appointment not found");
+  if (!updatedAppointment)
+    throw new AppError("No Appointment found with that ID", BAD_REQUEST);
   else if (
     updatedAppointment.status === "completed" ||
     updatedAppointment.status === "cancelled"
@@ -38,7 +45,10 @@ const updateOneOrMany = async (appointmentId, appointmentForUpdateData) => {
 
 const deleteOne = async (appointmentId) => {
   const deletedAppointment = await Appointment.findByIdAndDelete(appointmentId);
-  if (!deletedAppointment) throw new Error("Appointment for delete not found");
+
+  if (!deletedAppointment)
+    throw new AppError("No Appointment found with that ID", NOT_FOUND);
+
   return deletedAppointment;
 };
 

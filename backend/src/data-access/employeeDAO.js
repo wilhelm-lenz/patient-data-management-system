@@ -10,6 +10,10 @@ const findOne = async (employeeId) => {
   const foundedOneEmployee = await Employee.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(employeeId),
   });
+
+  if (!foundedOneEmployee)
+    throw new AppError("No Doctor found with that ID", NOT_FOUND);
+
   return foundedOneEmployee;
 };
 
@@ -24,7 +28,8 @@ const updateOneOrMany = async (employeeId, employeeForUpdateData) => {
     employeeForUpdateData,
     { new: true }
   );
-  if (!updatedEmployee) throw new Error("Employee not found");
+  if (!updatedEmployee)
+    throw new AppError("No Doctor found with that ID", BAD_REQUEST);
   else if (
     updatedEmployee.status === "completed" ||
     updatedEmployee.status === "cancelled"
@@ -36,6 +41,8 @@ const updateOneOrMany = async (employeeId, employeeForUpdateData) => {
 
 const deleteOne = async (employeeId) => {
   const deletedEmployee = Employee.findByIdAndDelete(employeeId);
+  if (!deletedEmployee)
+    throw new AppError("No Employee found with that ID", NOT_FOUND);
   return deletedEmployee;
 };
 

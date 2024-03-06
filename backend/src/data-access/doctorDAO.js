@@ -10,11 +10,14 @@ const findOne = async (doctorId) => {
   const foundedOneDoctor = await Doctor.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(doctorId),
   });
+
+  if (!foundedOneDoctor)
+    throw new AppError("No Doctor found with that ID", NOT_FOUND);
+
   return foundedOneDoctor;
 };
 
 const insertOne = async (newDoctor) => {
-  console.log("=============", newDoctor);
   const insertDoctor = await Doctor.create(newDoctor);
   return insertDoctor;
 };
@@ -25,7 +28,9 @@ const updateOneOrMany = async (doctorId, doctorForUpdateData) => {
     doctorForUpdateData,
     { new: true }
   );
-  if (!updatedDoctor) throw new Error("Doctor not found");
+  if (!updatedDoctor)
+    throw new AppError("No Doctor found with that ID", BAD_REQUEST);
+
   // else if (
   //   updatedDoctor.status === "completed" ||
   //   updatedDoctor.status === "cancelled"
@@ -37,6 +42,10 @@ const updateOneOrMany = async (doctorId, doctorForUpdateData) => {
 
 const deleteOne = async (doctorId) => {
   const deletedDoctor = Doctor.findByIdAndDelete(doctorId);
+
+  if (!deletedDoctor)
+    throw new AppError("No Doctor found with that ID", NOT_FOUND);
+
   return deletedDoctor;
 };
 

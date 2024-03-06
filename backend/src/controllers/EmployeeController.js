@@ -8,7 +8,7 @@ export const getAllEmployeesCtrl = catchAsync(async (_, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Employees: allEmployees,
+      employees: allEmployees,
     },
   });
 });
@@ -18,7 +18,7 @@ export const postCreateEmployeeCtrl = catchAsync(async (req, res) => {
   res.status(CREATED).json({
     status: "success",
     data: {
-      Employee: newEmployee,
+      employee: newEmployee,
     },
   });
 });
@@ -29,7 +29,7 @@ export const getOneEmployeeCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Employee: newEmployee,
+      employee: newEmployee,
     },
   });
 });
@@ -40,7 +40,7 @@ export const patchEmployeeCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Employee: newEmployee,
+      employee: newEmployee,
     },
   });
 });
@@ -51,7 +51,7 @@ export const deleteEmployeeCtrl = catchAsync(async (req, res) => {
   res.status(NO_CONTENT).json({
     status: "success",
     data: {
-      Employee: newEmployee,
+      employee: newEmployee,
     },
   });
 });

@@ -28,8 +28,13 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 app.use(express.static(`./public`));
 
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  // console.log(req.headers);
+  next();
+});
+
 app.use("/api/v1/appointments", appointmentRouter);
-// app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/employees", employeeRouter);
 app.use("/api/v1/medicalDocuments", medicalDocumentRouter);

@@ -10,6 +10,10 @@ const findOne = async (medicalDocumentId) => {
   const foundedOneMedicalDocument = await MedicalDocument.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(medicalDocumentId),
   });
+
+  if (!foundedOneMedicalDocument)
+    throw new AppError("No MedicalDocument found with that ID", NOT_FOUND);
+
   return foundedOneMedicalDocument;
 };
 
@@ -29,7 +33,8 @@ const updateOneOrMany = async (
     medicalDocumentForUpdateData,
     { new: true }
   );
-  if (!updatedMedicalDocument) throw new Error("MedicalDocument not found");
+  if (!updatedMedicalDocument)
+    throw new AppError("No MedicalDocument found with that ID", BAD_REQUEST);
   else if (
     updatedMedicalDocument.status === "completed" ||
     updatedMedicalDocument.status === "cancelled"
@@ -42,6 +47,8 @@ const updateOneOrMany = async (
 const deleteOne = async (medicalDocumentId) => {
   const deletedMedicalDocument =
     MedicalDocument.findByIdAndDelete(medicalDocumentId);
+  if (!deletedMedicalDocument)
+    throw new AppError("No Doctor found with that ID", NOT_FOUND);
   return deletedMedicalDocument;
 };
 

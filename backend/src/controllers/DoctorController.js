@@ -8,7 +8,7 @@ export const getAllDoctorsCtrl = catchAsync(async (_, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Doctors: allDoctors,
+      doctors: allDoctors,
     },
   });
 });
@@ -18,7 +18,7 @@ export const postCreateDoctorCtrl = catchAsync(async (req, res) => {
   res.status(CREATED).json({
     status: "success",
     data: {
-      Doctor: newDoctor,
+      doctor: newDoctor,
     },
   });
 });
@@ -29,7 +29,7 @@ export const getOneDoctorCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Doctor: newDoctor,
+      doctor: newDoctor,
     },
   });
 });
@@ -40,7 +40,7 @@ export const patchDoctorCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      Doctor: newDoctor,
+      doctor: newDoctor,
     },
   });
 });
@@ -51,7 +51,7 @@ export const deleteDoctorCtrl = catchAsync(async (req, res) => {
   res.status(NO_CONTENT).json({
     status: "success",
     data: {
-      Doctor: newDoctor,
+      doctor: newDoctor,
     },
   });
 });

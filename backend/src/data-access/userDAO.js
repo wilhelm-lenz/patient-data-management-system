@@ -10,13 +10,17 @@ const findOne = async (userId) => {
   const foundedOneUser = await User.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(userId),
   });
+
+  if (!foundedOneUser)
+    throw new AppError("No Treatment found with that ID", NOT_FOUND);
+
   return foundedOneUser;
 };
 
-const insertOne = async (newUser) => {
-  const insertUser = await User.create(newUser);
-  return insertUser;
-};
+// const insertOne = async (newUser) => {
+//   const insertUser = await User.create(newUser);
+//   return insertUser;
+// };
 
 const updateOneOrMany = async (userId, userForUpdateData) => {
   const updatedUser = await User.findByIdAndUpdate(
@@ -24,7 +28,8 @@ const updateOneOrMany = async (userId, userForUpdateData) => {
     userForUpdateData,
     { new: true }
   );
-  if (!updatedUser) throw new Error("User not found");
+  if (!updatedUser)
+    throw new AppError("No User found with that ID", BAD_REQUEST);
   else if (
     updatedUser.status === "completed" ||
     updatedUser.status === "cancelled"
@@ -36,13 +41,16 @@ const updateOneOrMany = async (userId, userForUpdateData) => {
 
 const deleteOne = async (userId) => {
   const deletedUser = User.findByIdAndDelete(userId);
+
+  if (!deletedUser) throw new AppError("No User found with that ID", NOT_FOUND);
+
   return deletedUser;
 };
 
 const userDAO = {
   findAll,
   findOne,
-  insertOne,
+  // insertOne,
   updateOneOrMany,
   deleteOne,
 };

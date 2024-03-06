@@ -9,7 +9,7 @@ export const getAllMedicalDocumentsCtrl = catchAsync(async (_, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      MedicalDocuments: allMedicalDocuments,
+      medicalDocuments: allMedicalDocuments,
     },
   });
 });
@@ -20,7 +20,7 @@ export const postCreateMedicalDocumentCtrl = catchAsync(async (req, res) => {
   res.status(CREATED).json({
     status: "success",
     data: {
-      MedicalDocument: newMedicalDocument,
+      medicalDocument: newMedicalDocument,
     },
   });
 });
@@ -33,7 +33,7 @@ export const getOneMedicalDocumentCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      MedicalDocument: newMedicalDocument,
+      medicalDocument: newMedicalDocument,
     },
   });
 });
@@ -47,7 +47,7 @@ export const patchMedicalDocumentCtrl = catchAsync(async (req, res) => {
   res.status(OK).json({
     status: "success",
     data: {
-      MedicalDocument: newMedicalDocument,
+      medicalDocument: newMedicalDocument,
     },
   });
 });
@@ -60,7 +60,7 @@ export const deleteMedicalDocumentCtrl = catchAsync(async (req, res) => {
   res.status(NO_CONTENT).json({
     status: "success",
     data: {
-      MedicalDocument: newMedicalDocument,
+      medicalDocument: newMedicalDocument,
     },
   });
 });

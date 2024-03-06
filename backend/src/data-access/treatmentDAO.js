@@ -10,6 +10,10 @@ const findOne = async (treatmentId) => {
   const foundedOneTreatment = await Treatment.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(treatmentId),
   });
+
+  if (!foundedOneTreatment)
+    throw new AppError("No Treatment found with that ID", NOT_FOUND);
+
   return foundedOneTreatment;
 };
 
@@ -24,7 +28,8 @@ const updateOneOrMany = async (treatmentId, treatmentForUpdateData) => {
     treatmentForUpdateData,
     { new: true }
   );
-  if (!updatedTreatment) throw new Error("Treatment not found");
+  if (!updatedTreatment)
+    throw new AppError("No Treatment found with that ID", BAD_REQUEST);
   else if (
     updatedTreatment.status === "completed" ||
     updatedTreatment.status === "cancelled"
@@ -36,6 +41,10 @@ const updateOneOrMany = async (treatmentId, treatmentForUpdateData) => {
 
 const deleteOne = async (treatmentId) => {
   const deletedTreatment = Treatment.findByIdAndDelete(treatmentId);
+
+  if (!deletedTreatment)
+    throw new AppError("No Treatment found with that ID", NOT_FOUND);
+
   return deletedTreatment;
 };
 

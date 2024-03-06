@@ -1,5 +1,5 @@
 import AppointmentController from "./AppointmentController.js";
-// import AuthorizationController from "./AuthorizationController.js";
+import AuthController from "./AuthController.js";
 import DoctorController from "./DoctorController.js";
 import EmployeeController from "./EmployeeController.js";
 import ErrorController from "./ErrorController.js";
@@ -12,7 +12,7 @@ import UserController from "./UserController.js";
 
 export {
   AppointmentController,
-  // AuthorizationController,
+  AuthController,
   DoctorController,
   EmployeeController,
   MedicalDocumentController,

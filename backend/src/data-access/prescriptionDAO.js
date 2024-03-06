@@ -10,6 +10,10 @@ const findOne = async (prescriptionId) => {
   const foundedOnePrescription = await Prescription.findById({
     _id: mongoose.Types.ObjectId.createFromHexString(prescriptionId),
   });
+
+  if (!foundedOnePrescription)
+    throw new AppError("No Prescription found with that ID", NOT_FOUND);
+
   return foundedOnePrescription;
 };
 
@@ -24,7 +28,8 @@ const updateOneOrMany = async (prescriptionId, prescriptionForUpdateData) => {
     prescriptionForUpdateData,
     { new: true }
   );
-  if (!updatedPrescription) throw new Error("Prescription not found");
+  if (!updatedPrescription)
+    throw new AppError("No Prescription found with that ID", BAD_REQUEST);
   else if (
     updatedPrescription.status === "completed" ||
     updatedPrescription.status === "cancelled"
@@ -36,6 +41,10 @@ const updateOneOrMany = async (prescriptionId, prescriptionForUpdateData) => {
 
 const deleteOne = async (prescriptionId) => {
   const deletedPrescription = Prescription.findByIdAndDelete(prescriptionId);
+
+  if (!deletedPrescription)
+    throw new AppError("No Prescription found with that ID", NOT_FOUND);
+
   return deletedPrescription;
 };
 

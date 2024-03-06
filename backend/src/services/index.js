@@ -50,7 +50,7 @@ import { deleteUser } from "./userService/deleteUser.js";
 import { getAllUsers } from "./userService/getAllUsers.js";
 import { getOneUser } from "./userService/getOneUser.js";
 import { patchUser } from "./userService/patchUser.js";
-import { postAddUser } from "./userService/postAddUser.js";
+// import { postAddUser } from "./userService/postAddUser.js";
 
 const AppointmentService = {
   deleteAppointment,
@@ -121,7 +121,7 @@ const UserService = {
   getAllUsers,
   getOneUser,
   patchUser,
-  postAddUser,
+  // postAddUser,
 };
 
 export {

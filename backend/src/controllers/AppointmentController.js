@@ -1,6 +1,7 @@
 import { AppointmentService } from "../services/index.js";
 import { OK, CREATED, NO_CONTENT } from "../data-access/httpStatusCodes.js";
 import { catchAsync } from "../utils/catchAsync.js";
+import AppError from "../utils/AppError.js";
 
 export const getAllAppointmentsCtrl = catchAsync(async (_, res) => {
   const allAppointments = await AppointmentService.getAllAppointments();
@@ -23,11 +24,13 @@ export const postCreateAppointmentCtrl = catchAsync(async (req, res) => {
   });
 });
 
-export const getOneAppointmentCtrl = catchAsync(async (req, res) => {
+export const getOneAppointmentCtrl = catchAsync(async (req, res, next) => {
   const appointmentId = req.params.id;
   const newAppointment = await AppointmentService.getOneAppointment(
     appointmentId
   );
+  if (!newAppointment)
+    return next(new AppError("No tour found with that ID", 404));
   res.status(OK).json({
     status: "success",
     data: {
@@ -55,6 +58,7 @@ export const deleteAppointmentCtrl = catchAsync(async (req, res) => {
   const newAppointment = await AppointmentService.deleteAppointment(
     appointmentId
   );
+
   res.status(NO_CONTENT).json({
     status: "success",
     data: {
