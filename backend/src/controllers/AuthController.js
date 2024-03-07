@@ -13,13 +13,16 @@ const signToken = (id) => {
 
 export const signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
-    username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangeAt: req.body.passwordChangeAt,
     role: req.body.role,
   });
+
+  console.log(newUser);
 
   const token = signToken(newUser._id);
 

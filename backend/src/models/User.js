@@ -3,9 +3,16 @@ import mongoose from "mongoose";
 import validator from "validator";
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    firstname: {
       type: String,
-      required: [true, "A user must have a username"],
+      // required: [true, "A user must have a username"],
+      trim: true,
+      minlength: [2, "A user username must have more or equal 2 charcters"],
+      maxlength: [200, "A user username must have less or equal 200 charcters"],
+    },
+    lastname: {
+      type: String,
+      // required: [true, "A user must have a username"],
       trim: true,
       minlength: [2, "A user username must have more or equal 2 charcters"],
       maxlength: [200, "A user username must have less or equal 200 charcters"],
@@ -27,7 +34,6 @@ const userSchema = new mongoose.Schema(
         message: "Role is either: doctor, employee, admin, patient",
       },
       default: "patient",
-      require: [true, "A user must have a role"],
     },
     password: {
       type: String,
